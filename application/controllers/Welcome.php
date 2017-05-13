@@ -21,6 +21,6 @@ class Welcome extends MY_Controller {
 	public function index()
 	{
 		$this->page->setTitle('Welcome in SPK university');
-		loadPage('layouts/layout');
+		loadPage('layouts/index');
 	}
 }

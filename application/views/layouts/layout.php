@@ -7,9 +7,6 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>-->
-<!--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
     <?php
         $this->page->generateCss();
@@ -38,7 +35,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Kriteria</a></li>
+                            <li class="active"><a href="<?php echo site_url('kriteria');?>">Kriteria</a></li>
                             <li><a href="#">Universitas</a></li>
                             <li><a href="#">Rangking</a></li>
                         </ul>
@@ -52,9 +49,12 @@
     </div>
 
     <div class="container">
-
+            <?php $this->load->view($view,$data);?>
     </div>
 
+    <script>
+        var base_url = "<?php echo site_url();?>";
+    </script>
     <?php
             $this->page->generateJs();
     ?>
