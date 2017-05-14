@@ -22,6 +22,16 @@ class MKriteria extends CI_Model{
         return 'kriteria';
     }
 
+    private function getData(){
+        $data = array(
+            'kriteria' => $this->kriteria,
+            'sifat' => $this->sifat,
+            'bobot' => $this->bobot
+        );
+
+        return $data;
+    }
+
 
 
     public function getAll()
@@ -47,24 +57,13 @@ class MKriteria extends CI_Model{
 
     public function insert()
     {
-        $data = array(
-            'kriteria' => $this->kriteria,
-            'sifat' => $this->sifat,
-            'bobot' => $this->bobot
-        );
-        $this->db->insert($this->getTable(), $data);
+        $this->db->insert($this->getTable(), $this->getData());
         return $this->db->insert_id();
     }
 
     public function update($where)
     {
-        $data = array(
-            'kriteria' => $this->kriteria,
-            'sifat' => $this->sifat,
-            'bobot' => $this->bobot
-        );
-
-        $this->db->update($this->getTable(), $data, $where);
+        $this->db->update($this->getTable(), $this->getData(), $where);
         return $this->db->affected_rows();
     }
 

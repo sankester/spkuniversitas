@@ -36,7 +36,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="<?php echo site_url('kriteria');?>">Kriteria</a></li>
-                            <li><a href="#">Universitas</a></li>
+                            <li><a href="<?php echo site_url('universitas');?>">Universitas</a></li>
                             <li><a href="#">Rangking</a></li>
                         </ul>
 

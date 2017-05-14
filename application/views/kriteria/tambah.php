@@ -1,6 +1,6 @@
-<div class="page-header">
-    <h1>Tambah Kriteria</h1>
-</div>
+    <div class="page-header">
+        <h1>Tambah Kriteria</h1>
+    </div>
 <div class="col-lg-12">
     <div class="panel panel-default">
         <div class="panel-body">
