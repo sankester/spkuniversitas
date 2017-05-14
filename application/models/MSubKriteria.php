@@ -78,8 +78,5 @@ class MSubKriteria extends CI_Model{
     {
         $this->db->where('kdKriteria', $id);
         return $this->db->delete($this->getTable());
-
     }
-
-
 }

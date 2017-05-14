@@ -6,6 +6,11 @@
     <div class="row">
         <div class="errors">
             <?php
+//            dump($nilaiUniversitas);
+//            dump($dataView);
+//            foreach ($nilaiUniversitas as $item => $value) {
+//                echo $value->nilai;
+//            }
             $errors = $this->session->flashdata('errors');
             if (isset($errors)) {
                 foreach ($errors as $error) {
@@ -25,6 +30,7 @@
                     <div class="form-group">
                         <label for="universitas">Nama Universitas</label>
                         <input name="universitas" type="text" class="form-control" id="universitas"
+                               value="<?php echo isset($nilaiUniversitas[0]->universitas) ? $nilaiUniversitas[0]->universitas : ''?>"
                                placeholder="nama universitas">
                     </div>
                 </div>
@@ -39,8 +45,8 @@
                 </tr>
                 <?php
                 foreach ($dataView as $item) {
-                    ?>
-                    <tr>
+                ?>
+                <tr>
                     <td><?php echo $item['nama']; ?></td>
                     <?php
                     $no = 1;
@@ -48,22 +54,37 @@
 
                         ?>
                         <td>
-                            <input type="radio" name="nilai[<?php echo $dataItem->kdKriteria?>]"
+                            <input type="radio" name="nilai[<?php echo $dataItem->kdKriteria ?>]"
                                    value="<?php echo $dataItem->value ?>"
-                            <?php
-                                if($no == 3){?>
-                                   checked="checked"
-                                <?php }
-                            ?>
-                            /> <?php echo $dataItem->subKriteria; ?>
+                                    <?php
+                                    if(isset($nilaiUniversitas)){
+                                        foreach ($nilaiUniversitas as $item => $value) {
+                                            if($value->kdKriteria == $dataItem->kdKriteria){
+                                                if($value->nilai ==  $dataItem->value){
+                                                    ?>
+                                                    checked="checked"
+                                                    <?php
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        if($no == 3){
+                                            ?>
+                                            checked="checked"
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                            /> <?php echo $dataItem->subKriteria;
+                            $no++;
+                           ?>
                         </td>
 
                         <?php
-                        $no++;
                     }
                     echo '</tr>';
-                }
-                ?>
+                    }
+                    ?>
 
             </table>
         </div>
@@ -71,7 +92,7 @@
         <div class="pull-right">
             <div class="col-md-12">
                 <button class="btn btn-primary" type="submit">Save</button>
-                <a class="btn btn-danger" href="<?php site_url('universitas')?>" role="button">Batal</a>
+                <a class="btn btn-danger" href="<?php site_url('universitas') ?>" role="button">Batal</a>
 
             </div>
         </div>

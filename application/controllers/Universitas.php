@@ -18,56 +18,92 @@ class Universitas extends MY_Controller
         $this->load->model('MSubKriteria');
         $this->load->model('MUniversitas');
         $this->load->model('MNilai');
+        $this->page->setLoadJs('assets/js/universitas');
     }
 
     public function index()
     {
-
-        loadPage('universitas/index');
+        $data['universitas'] = $this->MUniversitas->getAll();
+        loadPage('universitas/index', $data);
     }
 
-    public function tambah()
+    public function tambah($id = null)
     {
-        if (count($_POST)) {
-            $this->form_validation->set_rules('universitas', '', 'trim|required');
-//            $this->form_validation->set_rules('nilai', '', 'required',array('required' => 'Anda harus mengisi nilai kriteria !!!'));
-            if ($this->form_validation->run() == false) {
-                $errors = $this->form_validation->error_array();
-                $this->session->set_flashdata('errors', $errors);
-                redirect(current_url());
-            } else {
 
-                $universitas = $this->input->post('universitas');
-                $nilai = $this->input->post('nilai');
+        if ($id == null) {
+            if (count($_POST)) {
+                $this->form_validation->set_rules('universitas', '', 'trim|required');
+                if ($this->form_validation->run() == false) {
+                    $errors = $this->form_validation->error_array();
+                    $this->session->set_flashdata('errors', $errors);
+                    redirect(current_url());
+                } else {
 
-                $this->MUniversitas->universitas = $universitas;
-                if($this->MUniversitas->insert() == true){
-                    $success = false;
-                    $kdUniversitas = $this->MUniversitas->getLastID()->kdUniversitas;
-                    foreach ($nilai as $item => $value) {
-                        $this->MNilai->kdUniversitas = $kdUniversitas;
-                        $this->MNilai->kdKriteria = $item;
-                        $this->MNilai->nilai = $value;
-                        if ( $this->MNilai->insert()) {
-                            $success = true;
+                    $universitas = $this->input->post('universitas');
+                    $nilai = $this->input->post('nilai');
+
+                    $this->MUniversitas->universitas = $universitas;
+                    if ($this->MUniversitas->insert() == true) {
+                        $success = false;
+                        $kdUniversitas = $this->MUniversitas->getLastID()->kdUniversitas;
+                        foreach ($nilai as $item => $value) {
+                            $this->MNilai->kdUniversitas = $kdUniversitas;
+                            $this->MNilai->kdKriteria = $item;
+                            $this->MNilai->nilai = $value;
+                            if ($this->MNilai->insert()) {
+                                $success = true;
+                            }
+                        }
+                        if ($success == true) {
+                            $this->session->set_flashdata('message', 'Berhasil menambah data :)');
+                            redirect('universitas');
+                        } else {
+                            echo 'gagal';
                         }
                     }
-                    if($success == true){
-                        $this->session->set_flashdata('message','Berhasil menambah data :)');
-                        redirect('universitas');
-                    }else{
-                        echo 'gagal';
-                    }
                 }
-
+                //-----
+            }else{
+                $data['dataView'] = $this->getDataInsert();
+                loadPage('universitas/tambah', $data);
             }
         }else{
-            $data['dataView'] = $this->getDataView();
+            if(count($_POST)){
+                $kdUniversitas = $this->uri->segment(3, 0);
+                dump($kdUniversitas);
+                if($kdUniversitas > 0){
+                    $universitas = $this->input->post('universitas');
+                    $nilai = $this->input->post('nilai');
+                    $where = array('kdUniversitas' => $kdUniversitas);
+                    $this->MUniversitas->universitas = $universitas;
+                    dump($universitas);
+                    if($this->MUniversitas->update($where) == true){
+                        $success = false;
+                        foreach ($nilai as $item => $value) {
+                            $this->MNilai->kdUniversitas = $kdUniversitas;
+                            $this->MNilai->kdKriteria = $item;
+                            $this->MNilai->nilai = $value;
+                            if ($this->MNilai->update()) {
+                                $success = true;
+                            }
+                        }
+                        if ($success == true) {
+                            $this->session->set_flashdata('message', 'Berhasil mengubah data :)');
+                            redirect('universitas');
+                        } else {
+                            echo 'gagal';
+                        }
+                    }
+                }
+            }
+            $data['dataView'] = $this->getDataInsert();
+            $data['nilaiUniversitas'] = $this->MNilai->getNilaiByUniveristas($id);
             loadPage('universitas/tambah', $data);
         }
+
     }
 
-    private function getDataView()
+    private function getDataInsert()
     {
         $dataView = array();
         $kriteria = $this->MKriteria->getAll();
@@ -80,5 +116,15 @@ class Universitas extends MY_Controller
         }
 
         return $dataView;
+    }
+
+    public function delete($id)
+    {
+        if($this->MNilai->delete($id) == true){
+            if($this->MUniversitas->delete($id) == true){
+                $this->session->set_flashdata('message','Berhasil menghapus data :)');
+                echo json_encode(array("status" => 'true'));
+            }
+        }
     }
 }
