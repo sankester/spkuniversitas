@@ -156,7 +156,8 @@ function hapus_kriteria(id){
 }
 
 function lihat_kriteria(id){
-
+    $('.view-detail-kriteria').css('width', '50%');
+    $('.view-detail-kriteria').css('margin', '100px auto 100px auto');
 
     $('#viewKodeKriteria').text("");
     $('#viewKriteria').text("");

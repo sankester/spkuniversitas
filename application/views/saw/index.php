@@ -222,6 +222,22 @@
                         ?>
                     </table>
                 </div>
+
+                <?php
+                $table = $this->page->getData('tableFinal');
+                foreach ($table as $item => $value) {
+                    if ($value->Rangking == 1) {
+                        ?>
+                        <div class="alert alert-success" role="alert">
+                            <h4><b>Kesimpulan : </b> Dari hasil perhitungan yang dilakukan menggunakan metode SAW
+                                universitas terbaik untuk di pilih adalah
+                                <?php echo $value->Universitas ?> dengan nilai <?php echo $value->Total ?>
+                            </h4>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>

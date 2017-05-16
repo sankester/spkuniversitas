@@ -29,7 +29,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">SPK UNIVERSITAS</a>
+                        <a class="navbar-brand active" href="<?php echo site_url()?>">SPK UNIVERSITAS</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
