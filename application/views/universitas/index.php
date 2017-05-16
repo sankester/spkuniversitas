@@ -30,33 +30,32 @@
                         <tbody>
                         <?php
                         $no = 1;
-                        foreach ($universitas as $item) {
-                            ?>
-                            <tr>
-                                <td><?php echo $no++ ?></td>
-                                <td><?php echo $item->universitas ?></td>
-                                <td>
+                        if (isset($universitas)) {
+                            if(count($universitas) == 0){
+                                echo '<tr><td colspan="3" class="text-center"><h3>No Data Input</h3></td></tr>';
+                            }
+                            foreach ($universitas as $item) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $no++ ?></td>
+                                    <td><?php echo $item->universitas ?></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs"
+                                           href="<?php echo site_url('universitas/tambah/' . $item->kdUniversitas) ?>"
+                                           role="button">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Ubah
+                                        </a>
 
-                                    <!-- Contextual button for informational alert messages -->
-<!--                                    <button type="button" class="btn btn-info btn-xs"-->
-<!--                                            onclick="lihat_kriteria(--><?php //echo $item->kdUniversitas; ?><!--)">-->
-<!--//                                        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Lihat-->
-<!--//                                    </button>-->
-                                    <a class="btn btn-primary btn-xs" href="<?php echo site_url('universitas/tambah/'.$item->kdUniversitas)?>" role="button">
-                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Ubah
-                                    </a>
-
-                                    <!-- Indicates a dangerous or potentially negative action -->
-                                    <button type="button" data-toggle="modal" class="btn btn-danger btn-xs"
-                                            data-target="#modalDelete">
-                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Hapus
-                                    </button>
-
-                                </td>
-                            </tr>
-                            <?php
+                                        <!-- Indicates a dangerous or potentially negative action -->
+                                        <button type="button" data-toggle="modal" class="btn btn-danger btn-xs"
+                                                data-target="#modalDelete">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Hapus
+                                        </button>
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
-
                         ?>
                         </tbody>
                     </table>
@@ -89,7 +88,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="hapus_universitas(<?php echo $item->kdUniversitas; ?>)">
+                <button type="button" class="btn btn-danger"
+                        onclick="hapus_universitas(<?php echo $item->kdUniversitas; ?>)">
                     Hapus
                 </button>
             </div>

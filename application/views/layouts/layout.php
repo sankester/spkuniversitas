@@ -35,9 +35,28 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="<?php echo site_url('kriteria');?>">Kriteria</a></li>
-                            <li><a href="<?php echo site_url('universitas');?>">Universitas</a></li>
-                            <li><a href="#">Rangking</a></li>
+                            <li
+                             <?php if( $this->uri->segment(1) == 'kriteria'){
+                                 ?>
+                                    class="active"
+                                 <?php
+                             }?>
+                            ><a href="<?php echo site_url('kriteria');?>">Kriteria</a></li>
+                            <li
+                            <li
+                                <?php if( $this->uri->segment(1) == 'universitas'){
+                                    ?>
+                                    class="active"
+                                    <?php
+                                }?>
+                            ><a href="<?php echo site_url('universitas');?>">Universitas</a></li>
+                            <li
+                                <?php if( $this->uri->segment(1) == 'rangking'){
+                                    ?>
+                                    class="active"
+                                    <?php
+                                }?>
+                            ><a href="<?php echo site_url('rangking');?>">Rangking</a></li>
                         </ul>
 
                     </div><!-- /.navbar-collapse -->

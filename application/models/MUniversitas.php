@@ -29,6 +29,7 @@ class MUniversitas extends CI_Model{
 
     public function getAll()
     {
+        $universitas = array();
         $query = $this->db->get($this->getTable());
         if($query->num_rows() > 0){
             foreach ($query->result() as $row) {

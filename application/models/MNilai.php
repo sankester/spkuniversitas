@@ -52,6 +52,20 @@ class MNilai extends CI_Model{
         }
     }
 
+    public function getNilaiUniveristas()
+    {
+        $query = $this->db->query(
+            'select u.kdUniversitas, u.universitas, k.kdKriteria, k.kriteria ,n.nilai from universitas u, nilai n, kriteria k where u.kdUniversitas = n.kdUniversitas AND k.kdKriteria = n.kdKriteria '
+        );
+        if($query->num_rows() > 0){
+            foreach ($query->result() as $row) {
+                $nilai[] = $row;
+            }
+
+            return $nilai;
+        }
+    }
+
     public function update()
     {
         $data = array('nilai' => $this->nilai);

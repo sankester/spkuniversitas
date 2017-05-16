@@ -81,4 +81,14 @@ class MKriteria extends CI_Model{
         return $query->row();
     }
 
+    public function getBobotKriteria()
+    {
+        $query = $this->db->query('select kriteria, bobot from kriteria');
+        if($query->num_rows() > 0){
+            foreach ( $query->result() as $row) {
+                $bobot[] = $row;
+            }
+            return $bobot;
+        }
+    }
 }
